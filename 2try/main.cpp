@@ -8,9 +8,34 @@ using namespace sf;
 
 float heroS = 10.f;
 float blockS = 25.f;
+float v = 0.3f;
 
 
+int colCheck(RectangleShape b, RectangleShape hero, float x, float y) //проверка столкновений по ОX
+{
 
+	if (x > 0 && int(hero.getPosition().x + heroS + 1) > int(b.getPosition().x) && int(hero.getPosition().x + heroS + 1) < int(b.getPosition().x + blockS))
+		return 1;
+	else if (x < 0 && int(hero.getPosition().x - 1) < int(b.getPosition().x + blockS) && int(hero.getPosition().x - 1) > int(b.getPosition().x))
+		return -1;
+	if (y < 0 && int(hero.getPosition().y - 1) < int(b.getPosition().y + blockS) && int(hero.getPosition().y - 1) > int(b.getPosition().y))
+		return -2;
+	else if (y > 0 && int(hero.getPosition().y + heroS + 1) > int(b.getPosition().y) && int(hero.getPosition().y + heroS + 1) < int(b.getPosition().y + blockS))
+		return 2;
+	else
+		return 0;
+}
+
+int yCol(RectangleShape b, RectangleShape hero, float y) //проверка столкновений по ОY
+{
+
+	if (y < 0 && int(hero.getPosition().y - 1) < int(b.getPosition().y + blockS) && int(hero.getPosition().y - 1) > int(b.getPosition().y))
+		return -1;
+	else if (y > 0 && int(hero.getPosition().y + heroS + 1) > int(b.getPosition().y) && int(hero.getPosition().y + heroS + 1) < int(b.getPosition().y + blockS))
+		return 1;
+	else
+		return 0;
+}
 
 int main()
 {
@@ -21,10 +46,13 @@ int main()
 	RectangleShape block = RectangleShape();
 	vector<RectangleShape> blocks(800, RectangleShape(block));
 
+	bool right = true;
+	bool left = true;
+	bool up = true;
+	bool down = true;
 
 
 	int i, j, l = 0;
-	bool col;
 	
 	int map[33][20] =	{{ 1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, }, 
 						{ 1,2,1,0,0,1,0,1,2,2,2,1,1,1,1,0,0,0,0,1, },
@@ -77,11 +105,6 @@ int main()
 	float x = 0.f;
 	float y = 0.f;
 
-	bool upFlag = false;
-	bool leftFlag = false;
-	bool rightFlag = false;
-	bool downFlag = false;
-
 
 	hero.setPosition(0, 27);
 	Vector2f heroPos = hero.getPosition();
@@ -98,26 +121,23 @@ int main()
 				switch (event.key.code)
 				{
 				case Keyboard::D:
-					x = 0.2f;
+					if (right)
+						x = v;
 				break;
 
-				case Keyboard::A: 
-					x = -0.2f;
+				case Keyboard::A:
+					if (left)
+						x = -v;
 				break;
 
 				case Keyboard::W:
-					y = -0.2f;
+					if (up)
+						y = -v;
 				break;
 
 				case Keyboard::S:
-					y = 0.2f;
-				break;
-
-				case Keyboard::Space:
-					cout << "\n\nup: " << upFlag;
-					cout << "\ndown: " << downFlag;
-					cout << "\nright: " << rightFlag;
-					cout << "\nleft: " << leftFlag;
+					if (down)
+						y = v;
 				break;
 				}
 
@@ -137,18 +157,53 @@ int main()
 					y = 0;
 					break;
 				}
-
 		}
 
 		window.clear();
 
 		for (i = 0; i < blocks.size(); i++)
-		{
-			window.draw(blocks[i]);
+		{	
+			if (hero.getGlobalBounds().intersects(blocks[i].getGlobalBounds()))
+			{
+				if (colCheck(blocks[i], hero, x, y) == 1)
+				{
+					x = 0;
+					cout << "\nright";
+					right = false;
+				}
+				else right = true;
 
-			if (hero.getGlobalBounds().intersects(block.getGlobalBounds()))
-				rightFlag = leftFlag = upFlag = downFlag = 0;
-			//cout << " " << int(hero.getGlobalBounds().top); 
+				if (colCheck(blocks[i], hero, x, y) == -1)
+				{
+					x = 0;
+					cout << "\nleft";
+					left = false;
+				}
+				else left = true;
+
+				if (colCheck(blocks[i], hero, x, y) == -2)
+				{
+					y = 0;
+					cout << "\nup";
+					up = false;
+				}
+				else up = true;
+
+				if (colCheck(blocks[i], hero, x, y) == 2)
+				{
+					y = 0;
+					cout << "\ndown";
+					down = false;
+				}
+				else down = true;
+			}
+			else
+			{
+				right = left = true;
+				up = down = true;
+			}
+
+			window.draw(blocks[i]);
 		}
 
 		hero.move(x, y);
@@ -158,12 +213,3 @@ int main()
 
 	return 0;
 }
-/*void blockcheck(int i, int j)
-{
-	for (int i = 0; i < 33; i++)
-		for (int j = 0; j < 20; j++)
-		{
-			if (arr[i][j] == 1)
-				Vector2f 
-		}
-}*/
