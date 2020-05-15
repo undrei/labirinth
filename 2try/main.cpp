@@ -179,7 +179,7 @@ int main()
 				}
 			}
 
-		
+		//проверка
 		hero.move(x, y);
 		window.draw(hero);
 		window.display();
@@ -187,7 +187,7 @@ int main()
 
 	return 0;
 }
-//asdasdasd
+//asdasdasdaa
 /*void blockcheck(int * arr[][])
 {
 	for (int i = 0; i < 33; i++)
