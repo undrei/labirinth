@@ -86,31 +86,19 @@ int main()
 				switch (event.key.code)
 				{
 				case Keyboard::D:
-					if (!rightFlag)
-						x = 0.2f;
-					else
-						x = 0;
+					x = 0.2f;
 				break;
 
 				case Keyboard::A: 
-					if (!leftFlag)
-						x = -0.2f;
-					else
-						x = 0;
+					x = -0.2f;
 				break;
 
 				case Keyboard::W:
-					if (!upFlag)
-						y = -0.2f;
-					else
-						y = 0;
+					y = -0.2f;
 				break;
 
 				case Keyboard::S:
-					if (!downFlag)
-						y = 0.2f;
-					else
-						y = 0;
+					y = 0.2f;
 				break;
 
 				case Keyboard::Space:
@@ -150,28 +138,7 @@ int main()
 					block.setPosition(i * blockS, j * blockS);
 					
 					if (hero.getGlobalBounds().intersects(block.getGlobalBounds()))
-					{
-						if (int(hero.getPosition().x + heroS) == int(block.getPosition().x))
-							rightFlag = true;
-						else
-							rightFlag = false;
-
-						if (int(hero.getPosition().x + 1) == int(block.getPosition().x + blockS))
-							leftFlag = true;
-						else 
-							leftFlag = false;
-
-						if (int(hero.getPosition().y + 1) == int(block.getPosition().y + blockS))
-							upFlag = true;
-						else
-							upFlag = false;
-
-						if (int(hero.getPosition().y + heroS) == int(block.getPosition().y))
-							downFlag = true;
-						else
-							downFlag = false;
-
-					}
+						rightFlag = leftFlag = upFlag = downFlag = 0;
 						//cout << " " << int(hero.getGlobalBounds().top); 
 					
 					blocks.push_back(&block);
