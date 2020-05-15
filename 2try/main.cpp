@@ -26,17 +26,6 @@ int colCheck(RectangleShape b, RectangleShape hero, float x, float y) //проверка
 		return 0;
 }
 
-int yCol(RectangleShape b, RectangleShape hero, float y) //проверка столкновений по ОY
-{
-
-	if (y < 0 && int(hero.getPosition().y - 1) < int(b.getPosition().y + blockS) && int(hero.getPosition().y - 1) > int(b.getPosition().y))
-		return -1;
-	else if (y > 0 && int(hero.getPosition().y + heroS + 1) > int(b.getPosition().y) && int(hero.getPosition().y + heroS + 1) < int(b.getPosition().y + blockS))
-		return 1;
-	else
-		return 0;
-}
-
 int main()
 {
 	RenderWindow window(VideoMode(900, 500), "Game");
@@ -50,7 +39,6 @@ int main()
 	bool left = true;
 	bool up = true;
 	bool down = true;
-
 
 	int i, j, l = 0;
 	
@@ -100,11 +88,8 @@ int main()
 			}
 		}
 
-
-	//(x,y) for hero
 	float x = 0.f;
 	float y = 0.f;
-
 
 	hero.setPosition(0, 27);
 	Vector2f heroPos = hero.getPosition();
@@ -157,12 +142,14 @@ int main()
 					y = 0;
 					break;
 				}
+
 		}
 
 		window.clear();
 
 		for (i = 0; i < blocks.size(); i++)
 		{	
+			window.draw(blocks[i]);
 			if (hero.getGlobalBounds().intersects(blocks[i].getGlobalBounds()))
 			{
 				if (colCheck(blocks[i], hero, x, y) == 1)
@@ -202,8 +189,6 @@ int main()
 				right = left = true;
 				up = down = true;
 			}
-
-			window.draw(blocks[i]);
 		}
 
 		hero.move(x, y);

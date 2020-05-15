@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Menu.h"
 
-int main()
+void s()
 {
 	sf::RenderWindow window(sf::VideoMode(600, 600), "SFML WORK!");
 
