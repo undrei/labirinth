@@ -196,4 +196,4 @@ int main()
 			if (arr[i][j] == 1)
 				Vector2f 
 		}
-}*/
+}*///
