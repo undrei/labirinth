@@ -187,7 +187,7 @@ int main()
 
 	return 0;
 }
-
+//
 /*void blockcheck(int * arr[][])
 {
 	for (int i = 0; i < 33; i++)
@@ -196,4 +196,4 @@ int main()
 			if (arr[i][j] == 1)
 				Vector2f 
 		}
-}*///
+}*/
