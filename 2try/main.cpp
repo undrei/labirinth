@@ -83,7 +83,7 @@ int main()
 				window.close();
 
 			if (event.type == Event::KeyPressed)
-				switch (event.key.code)
+				switch (event.key.code)s
 				{
 				case Keyboard::D:
 					if (!rightFlag)
