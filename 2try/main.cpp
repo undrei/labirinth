@@ -179,7 +179,6 @@ int main()
 				}
 			}
 
-		//проверка
 		hero.move(x, y);
 		window.draw(hero);
 		window.display();
