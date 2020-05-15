@@ -14,16 +14,18 @@ float blockS = 25.f;
 
 int main()
 {
-	RenderWindow window(VideoMode(900, 500), "SFMLworks");
+	RenderWindow window(VideoMode(900, 500), "Game");
 	//Shapes
 	RectangleShape hero(Vector2f(heroS,heroS));
-	//RectangleShape heroHB(Vector2f(heroS+2, heroS+2));
-	vector<RectangleShape*> blocks;
-	RectangleShape block = RectangleShape();
-	block.setSize(Vector2f(blockS, blockS));
 	
-	block.setFillColor(Color(100,100,100));
+	RectangleShape block = RectangleShape();
+	vector<RectangleShape> blocks(800, RectangleShape(block));
 
+
+
+	int i, j, l = 0;
+	bool col;
+	
 	int map[33][20] =	{{ 1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, }, 
 						{ 1,2,1,0,0,1,0,1,2,2,2,1,1,1,1,0,0,0,0,1, },
 						{ 1,2,1,1,0,1,0,1,2,1,2,2,2,2,1,0,1,1,0,1, },
@@ -57,10 +59,20 @@ int main()
 						{ 1,2,1,1,2,1,0,0,1,2,1,1,2,1,0,0,0,1,0,1, },
 						{ 1,2,2,2,2,1,0,1,1,2,2,2,2,0,0,1,0,0,0,1, },
 						{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, } };
-												
-	int i, j;
-	bool col;
-	
+
+	for (i = 0; i < 33; i++)
+		for (j = 0; j < 20; j++)
+		{
+			if (map[i][j] == 1)
+			{
+				blocks[l].setPosition(i * blockS, j * blockS);
+				blocks[l].setSize(Vector2f(blockS, blockS));
+				blocks[l].setFillColor(Color(100, 100, 100));
+				l++;
+			}
+		}
+
+
 	//(x,y) for hero
 	float x = 0.f;
 	float y = 0.f;
@@ -130,21 +142,14 @@ int main()
 
 		window.clear();
 
-		for(i = 0; i < 33; i++)
-			for (j = 0; j < 20; j++)
-			{
-				if (map[i][j] == 1)
-				{
-					block.setPosition(i * blockS, j * blockS);
-					
-					if (hero.getGlobalBounds().intersects(block.getGlobalBounds()))
-						rightFlag = leftFlag = upFlag = downFlag = 0;
-						//cout << " " << int(hero.getGlobalBounds().top); 
-					
-					blocks.push_back(&block);
-					window.draw(block);
-				}
-			}
+		for (i = 0; i < blocks.size(); i++)
+		{
+			window.draw(blocks[i]);
+
+			if (hero.getGlobalBounds().intersects(block.getGlobalBounds()))
+				rightFlag = leftFlag = upFlag = downFlag = 0;
+			//cout << " " << int(hero.getGlobalBounds().top); 
+		}
 
 		hero.move(x, y);
 		window.draw(hero);
@@ -153,8 +158,7 @@ int main()
 
 	return 0;
 }
-//asdasdasdaa
-/*void blockcheck(int * arr[][])
+/*void blockcheck(int i, int j)
 {
 	for (int i = 0; i < 33; i++)
 		for (int j = 0; j < 20; j++)
