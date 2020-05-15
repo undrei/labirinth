@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+/*#include <SFML/Graphics.hpp>
 #include <stdio.h>
 #include <conio.h>
 #include <iostream>
@@ -154,7 +154,7 @@ int main()
 	return 0;
 }
 //asdasdasdaa
-/*void blockcheck(int * arr[][])
+void blockcheck(int * arr[][])
 {
 	for (int i = 0; i < 33; i++)
 		for (int j = 0; j < 20; j++)
