@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Menu.h"
 
-void s()
+int msain()
 {
 	sf::RenderWindow window(sf::VideoMode(600, 600), "SFML WORK!");
 
@@ -59,4 +59,5 @@ void s()
 
 		window.display();
 	}
+	return 0;
 }
